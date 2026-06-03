@@ -67,13 +67,6 @@ export const AdminApprovalModal: React.FC<AdminApprovalModalProps> = ({
     let active = true;
     const checkApprovalStatus = async () => {
       if (!userId) return;
-      if (userId === "1902716432") {
-        localStorage.setItem('admin_approval_status', 'approved');
-        localStorage.setItem('bypass_approved_userId', userId);
-        audioManager.playSuccess();
-        onApprove();
-        return;
-      }
       try {
         setIsChecking(true);
         const response = await fetch(`https://shopping-ca5f4-default-rtdb.firebaseio.com/approval/${userId}.json`);

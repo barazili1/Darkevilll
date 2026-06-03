@@ -41,10 +41,6 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
   // Dynamically check Firebase if entered ID is already approved by Administrator
   React.useEffect(() => {
     const trimmedId = userId.trim();
-    if (trimmedId === "1902716432") {
-      setIsApprovedOnServer(true);
-      return;
-    }
     if (trimmedId.length >= 8 && trimmedId.length <= 15) {
       if (trimmedId === "000999000") {
         setIsApprovedOnServer(false);
