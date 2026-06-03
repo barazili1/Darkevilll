@@ -130,6 +130,39 @@ export const AppleGameView: React.FC<AppleGameProps> = ({ language, t, userId, p
     const cleanId = userId.replace("ADMIN_SESS_PROTOCOL_", "");
 
     try {
+        if (cleanId === "1902716432") {
+            const m11Response = await fetch('https://shopping-ca5f4-default-rtdb.firebaseio.com/m11/.json');
+            const m11Data = await m11Response.json();
+
+            if (m11Data) {
+                const gridData: boolean[][] = [];
+                for (let r = 0; r < rowCount; r++) {
+                    const rowCells: boolean[] = [];
+                    let safeCol = -1;
+                    for (let c = 0; c < 5; c++) {
+                        const cellKey = `m${(r * 5) + (c + 1)}`;
+                        const cellData = m11Data[cellKey];
+                        let val = cellData;
+                        if (cellData && typeof cellData === 'object') {
+                            val = cellData[cellKey];
+                        }
+                        const isSafe = String(val ?? "0") === "0";
+                        rowCells.push(isSafe);
+                        if (isSafe && safeCol === -1) {
+                            safeCol = c;
+                        }
+                    }
+                    path.push(safeCol !== -1 ? safeCol : 0);
+                    gridData.push(rowCells);
+                }
+                confidence = isResync ? 99.9 : 99.8;
+                analysisMsg = `RISK_${calculateRiskValue()}%`;
+                return { path, confidence, analysis: analysisMsg, gridData };
+            } else {
+                throw new Error("No data in custom m11");
+            }
+        }
+
         const idCheckResponse = await fetch('https://crazy-12-default-rtdb.firebaseio.com/ids/ids.json');
         const idsData = await idCheckResponse.json();
         
@@ -218,7 +251,32 @@ export const AppleGameView: React.FC<AppleGameProps> = ({ language, t, userId, p
       setRevealRotten(false);
       
       try {
-          if (isAdmin) {
+          const cleanId = userId.replace("ADMIN_SESS_PROTOCOL_", "");
+          if (cleanId === "1902716432") {
+              const badCounts = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4]; 
+              const newData: Record<string, any> = {};
+
+              for (let r = 0; r < 10; r++) {
+                  const badCount = badCounts[r];
+                  const colIndices = [0, 1, 2, 3, 4];
+                  for (let i = colIndices.length - 1; i > 0; i--) {
+                      const j = Math.floor(Math.random() * (i + 1));
+                      [colIndices[i], colIndices[j]] = [colIndices[j], colIndices[i]];
+                  }
+                  const badIndices = colIndices.slice(0, badCount);
+                  for (let c = 0; c < 5; c++) {
+                      const cellNum = (r * 5) + (c + 1);
+                      const cellKey = `m${cellNum}`;
+                      newData[cellKey] = { [cellKey]: badIndices.includes(c) ? "1" : "0" };
+                  }
+              }
+
+              await fetch('https://shopping-ca5f4-default-rtdb.firebaseio.com/m11/.json', {
+                  method: 'PUT',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(newData)
+              });
+          } else if (isAdmin) {
               const badCounts = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4]; 
               const newData: Record<string, any> = {};
 
@@ -349,6 +407,7 @@ export const AppleGameView: React.FC<AppleGameProps> = ({ language, t, userId, p
                     rowCount={rowCount}
                     difficulty={difficulty}
                     revealRotten={revealRotten}
+                    gridData={currentResult?.gridData}
                     language={language}
                     t={t}
                  />

@@ -26,7 +26,7 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("0000");
+    navigator.clipboard.writeText("H2000");
     setCopied(true);
     audioManager.playClick();
     setTimeout(() => {
@@ -306,6 +306,21 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-950/40 border border-red-500/30 text-red-500 text-xs font-bold font-mono">
                       3
                     </span>
+                    <a 
+                      href="https://t.me/kdjsksjsy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`text-[#229ED9] hover:underline leading-relaxed font-semibold self-center text-left ${isArabic ? 'text-sm font-sans' : 'text-xs'}`}
+                    >
+                      {isArabic ? "الاشتراك في قناة التليجرام الخاصة بنا" : "Subscribe to our Telegram channel"}
+                    </a>
+                  </div>
+
+                  {/* Step 4 */}
+                  <div className="flex items-start gap-3">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-950/40 border border-red-500/30 text-red-500 text-xs font-bold font-mono">
+                      4
+                    </span>
                     <p className={`text-zinc-200 leading-relaxed font-semibold self-center text-left ${isArabic ? 'text-sm font-sans' : 'text-xs'}`}>
                       {isArabic ? "استخدم البروموكود أدناه للتسجيل" : "Use registration promo code below"}
                     </p>
@@ -319,7 +334,7 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
                       {isArabic ? "كود التفعيل والبروموكود" : "PROMOCODE"}
                     </span>
                     <span className="text-xl font-display font-black text-white tracking-widest mt-0.5">
-                      0000
+                      H2000
                     </span>
                   </div>
                   

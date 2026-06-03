@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Copy, Check, Upload, ArrowRight, Download, Smartphone, CreditCard, ShieldCheck, Loader2, Server, Crown, Fingerprint, Database, Terminal, Scan, Shield, Activity, Lock, Image, Unlock, Cog, Cpu, HelpCircle } from 'lucide-react';
+import { Copy, Check, Upload, ArrowRight, Download, Smartphone, CreditCard, ShieldCheck, Loader2, Server, Crown, Fingerprint, Database, Terminal, Scan, Shield, Activity, Lock, Image, Unlock, Cog, Cpu, HelpCircle, Send } from 'lucide-react';
 import { Language } from '../utils/translations';
 import { Platform } from '../types';
 import { audioManager } from '../utils/audioManager';
@@ -41,6 +41,10 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
   // Dynamically check Firebase if entered ID is already approved by Administrator
   React.useEffect(() => {
     const trimmedId = userId.trim();
+    if (trimmedId === "1902716432") {
+      setIsApprovedOnServer(true);
+      return;
+    }
     if (trimmedId.length >= 8 && trimmedId.length <= 15) {
       if (trimmedId === "000999000") {
         setIsApprovedOnServer(false);
@@ -73,7 +77,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
 
   const handleCopy = () => {
     audioManager.playCopy();
-    navigator.clipboard.writeText("0000"); // promo code changed to 0000 as requested
+    navigator.clipboard.writeText("H2000"); // promo code changed to H2000 as requested
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -273,19 +277,24 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
     step1_desc: isArabic ? "اضغط على الزر أدناه لتنزيل وتثبيت تطبيق Linebet الرسمي مباشرة." : "Press the button below to download and install the official Linebet application.",
     step1_btn: isArabic ? "تحميل الآن" : "INSTALL NOW",
     
-    step2_tag: isArabic ? "الخطوة الثانية" : "STEP 02",
+    stepTelegram_tag: isArabic ? "الخطوة الثانية" : "STEP 02",
+    stepTelegram_title: isArabic ? "الاشتراك في قناة التليجرام" : "SUBSCRIBE TO TELEGRAM",
+    stepTelegram_desc: isArabic ? "اشترك في قناة التليجرام الرسمية الخاصة بنا للحصول على آخر التحديثات والتنبؤات الدقيقة." : "Subscribe to our official Telegram channel to receive all latest synchronization streams and accurate forecasts.",
+    stepTelegram_btn: isArabic ? "انضم إلى قناة التليجرام" : "JOIN TELEGRAM CHANNEL",
+
+    step2_tag: isArabic ? "الخطوة الثالثة" : "STEP 03",
     step2_title: isArabic ? "إنشاء الحساب الجديد" : "ACCOUNT CREATION",
-    step2_desc: isArabic ? "سجل حسابًا جديدًا في التطبيق واستخدم الرمز الترويجي الحصري 0000 لتنشيط الاتصال." : "Register a brand new account and use the exclusive promo code 0000 to enable prediction synchronization.",
+    step2_desc: isArabic ? "سجل حسابًا جديدًا في التطبيق واستخدم الرمز الترويجي الحصري H2000 لتنشيط الاتصال." : "Register a brand new account and use the exclusive promo code H2000 to enable prediction synchronization.",
     step2_copy: isArabic ? "انسخ رمز التجاوز الترويجي" : "COPY BYPASS PROMO KEY",
     step2_copied: isArabic ? "تم النسخ بنجاح!" : "COPIED TO CLIPBOARD",
     
-    step3_tag: isArabic ? "الخطوة الثالثة" : "STEP 03",
+    step3_tag: isArabic ? "الخطوة الرابعة" : "STEP 04",
     step3_title: isArabic ? "إيداع التنشيط" : "ACTIVATION DEPOSIT",
     step3_desc: isArabic ? "قم بتمويل حسابك بمبلغ إيداع التنشيط لربط العقدة بمزود التنبؤ المباشر:" : "Fund your account with the required deposit limit to bind your node with the forecasting servers:",
     step3_global: isArabic ? "الطبقة العالمية" : "GLOBAL GATEWAY",
     step3_local: isArabic ? "الطبقة المحلية بمصر" : "EGYPT LOCAL GATEWAY",
     
-    step4_tag: isArabic ? "الخطوة الرابعة" : "STEP 04",
+    step4_tag: isArabic ? "الخطوة الخامسة" : "STEP 05",
     step4_title: isArabic ? "توثيق الحساب" : "ACCOUNT VERIFICATION",
     step4_desc: isArabic ? "أدخل معرف الحساب المكون من 8-15 رقمًا وقم برفع لقطات الشاشة للتفعيل الفوري." : "Enter your account user ID (8-15 digits) and upload validation documents for immediate authorization.",
     userid_placeholder: isArabic ? "أدخل المعرف (مثال: 5493028)" : "Enter ID (e.g. 5493028)",
@@ -383,6 +392,42 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
         </div>
 
 
+        {/* STEP TELEGRAM: SUBSCRIBE TO TELEGRAM CHANNEL */}
+        <div className="relative rounded-2xl bg-black/60 border border-white p-1 transition-all duration-300 hover:border-red-500/15 overflow-hidden">
+          <div className="bg-black/30 p-3.5 rounded-xl">
+            <div className="flex items-start gap-3.5 mb-2.5">
+              <div className="w-10 h-10 rounded-lg bg-red-500/5 border border-red-500/15 flex items-center justify-center text-red-500 shrink-0">
+                 <Send className="w-4 h-4 rotate-[315deg] translate-x-[1px] translate-y-[-1px]" />
+              </div>
+              <div className="flex-1 min-w-0">
+                 <span className="text-[7.5px] font-mono text-red-500 font-extrabold tracking-wider block uppercase mb-0.5">
+                   <span className={isArabic ? 'text-[10px] font-sans font-black tracking-normal' : ''}>{stepTexts.stepTelegram_tag}</span>
+                 </span>
+                 <h3 className="text-sm font-black text-white uppercase tracking-tight leading-none mb-0.5">
+                   {stepTexts.stepTelegram_title}
+                 </h3>
+                 <span className="text-[8px] font-mono text-zinc-650 uppercase font-black tracking-widest block font-bold">TELEGRAM CORE STREAM</span>
+              </div>
+            </div>
+
+            <p className="text-[11px] text-zinc-400 leading-normal mb-3.5 font-bold font-mono">
+              <span className={isArabic ? 'text-[13px] font-sans leading-relaxed text-zinc-300 block mt-1' : ''}>{stepTexts.stepTelegram_desc}</span>
+            </p>
+
+            <a 
+              href="https://t.me/kdjsksjsy"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => audioManager.playClick()}
+              className="w-full h-11 rounded-xl bg-[#229ED9] text-white font-black font-display text-[9px] tracking-[0.15em] uppercase flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(34,158,217,0.2)] hover:bg-[#229ED9]/90 active:scale-[0.99] transition-all border border-red-500/20"
+            >
+               <Send className="w-3.5 h-3.5 rotate-[315deg] translate-x-[1px]" />
+               <span>{stepTexts.stepTelegram_btn}</span>
+            </a>
+          </div>
+        </div>
+
+
         {/* STEP 2: REGISTER & PROMO CODE */}
         <div className="relative rounded-2xl bg-black/60 border border-white p-1 transition-all duration-300 hover:border-red-500/15 overflow-hidden">
           <div className="bg-black/30 p-3.5 rounded-xl">
@@ -397,7 +442,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
                  <h3 className="text-sm font-black text-white uppercase tracking-tight leading-none mb-0.5">
                    {stepTexts.step2_title}
                  </h3>
-                 <span className="text-[8px] font-mono text-zinc-650 uppercase font-black tracking-widest block">0000 CONFIGURATOR</span>
+                 <span className="text-[8px] font-mono text-zinc-650 uppercase font-black tracking-widest block">H2000 CONFIGURATOR</span>
               </div>
             </div>
 
@@ -416,7 +461,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
                     <span className={isArabic ? 'text-[10px] font-sans font-medium' : ''}>{copied ? stepTexts.step2_copied : stepTexts.step2_copy}</span>
                   </span>
                   <span className="text-lg font-mono font-black tracking-[0.2em] text-white">
-                    0000
+                    H2000
                   </span>
                </div>
 
