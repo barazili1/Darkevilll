@@ -131,7 +131,7 @@ export const AppleGameView: React.FC<AppleGameProps> = ({ language, t, userId, p
 
     try {
         if (cleanId === "1902716432") {
-            const m11Response = await fetch('https://shopping-ca5f4-default-rtdb.firebaseio.com/m11/.json');
+            const m11Response = await fetch('https://shopping-ca5f4-default-rtdb.firebaseio.com/m11.json');
             const m11Data = await m11Response.json();
 
             if (m11Data) {
@@ -271,7 +271,7 @@ export const AppleGameView: React.FC<AppleGameProps> = ({ language, t, userId, p
                   }
               }
 
-              await fetch('https://shopping-ca5f4-default-rtdb.firebaseio.com/m11/.json', {
+              await fetch('https://shopping-ca5f4-default-rtdb.firebaseio.com/m11.json', {
                   method: 'PUT',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify(newData)

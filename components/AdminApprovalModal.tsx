@@ -23,44 +23,7 @@ export const AdminApprovalModal: React.FC<AdminApprovalModalProps> = ({
   onDismiss,
 }) => {
   const isArabic = lang === 'ar';
-  const [timeLeft, setTimeLeft] = useState<number>(1800); // 30 minutes in seconds
   const [isChecking, setIsChecking] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  // Initialize and run the countdown timer
-  useEffect(() => {
-    // Get original start time or set new one
-    let startTimeStr = localStorage.getItem('admin_approval_timer_start');
-    if (!startTimeStr) {
-      const now = Date.now().toString();
-      localStorage.setItem('admin_approval_timer_start', now);
-      startTimeStr = now;
-    }
-
-    const startTime = parseInt(startTimeStr, 10);
-    const thirtyMinutesMs = 30 * 60 * 1000;
-
-    const updateTimer = () => {
-      const elapsedMs = Date.now() - startTime;
-      const remainingMs = thirtyMinutesMs - elapsedMs;
-
-      if (remainingMs <= 0) {
-        // Automatically approve if 30 minutes passed
-        setTimeLeft(0);
-        localStorage.setItem('admin_approval_status', 'approved');
-        localStorage.setItem('bypass_approved_userId', userId);
-        audioManager.playSuccess();
-        onApprove();
-      } else {
-        setTimeLeft(Math.floor(remainingMs / 1000));
-      }
-    };
-
-    updateTimer();
-    const interval = setInterval(updateTimer, 1000);
-
-    return () => clearInterval(interval);
-  }, [userId, onApprove]);
 
   // Periodic polling of the Firebase approval status
   useEffect(() => {
@@ -104,15 +67,6 @@ export const AdminApprovalModal: React.FC<AdminApprovalModalProps> = ({
     };
   }, [userId, onApprove, onReject]);
 
-  // Format time into MM:SS
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const progressPercent = Math.min(100, Math.max(0, (timeLeft / 1800) * 100));
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md" dir="ltr">
       <MotionDiv
@@ -128,7 +82,7 @@ export const AdminApprovalModal: React.FC<AdminApprovalModalProps> = ({
           {/* Icon Header using Custom Logo */}
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-950/20 border border-red-500/30 mb-5 relative shadow-[0_0_25px_rgba(239,68,68,0.25)] p-0">
             <img 
-              src="https://logo12.gamer.gd/logo.png" 
+               src="https://logo12.gamer.gd/logo.png" 
               className="w-full h-full object-contain animate-pulse rounded-full" 
               alt="Logo" 
               referrerPolicy="no-referrer"
@@ -145,29 +99,6 @@ export const AdminApprovalModal: React.FC<AdminApprovalModalProps> = ({
               ? 'لقد تم إرسال طلب التفعيل الخاص بك بنجاح إلى الإدارة وجاري مراجعته الآن لربط حسابك بمزود الخدمة.'
               : 'Your activation request has been successfully submitted and is under review to bind your account.'}
           </p>
-
-          {/* Countdown timer card */}
-          <div className="relative mb-6 p-4 rounded-2xl bg-black/60 border border-red-500/20 shadow-[inset_0_0_15px_rgba(239,68,68,0.05)]">
-            <span className="block text-[9px] font-mono font-black tracking-widest text-zinc-500 mb-1 uppercase">
-              {isArabic ? 'مؤقت التفعيل التلقائي' : 'AUTOMATIC BYPASS TIMER'}
-            </span>
-            <div className="text-3xl font-mono font-black text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.5)] tracking-wider">
-              {formatTime(timeLeft)}
-            </div>
-
-            {/* Micro progress bar */}
-            <div className="mt-3.5 h-1.5 w-full bg-zinc-900 rounded-full overflow-hidden p-[1px]">
-              <div
-                className="h-full bg-red-500 rounded-full transition-all duration-1000 ease-linear shadow-[0_0_8px_#ef4444]"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
-            <span className="block text-[8px] font-mono text-zinc-500 mt-2 uppercase tracking-wide">
-              {isArabic
-                ? 'سيتم تفعيل حسابك تلقائياً إذا لم يستجب المسؤول خلال 30 دقيقة'
-                : 'Auto-bypass activates if admin does not respond within 30m'}
-            </span>
-          </div>
 
           {/* Connection status footer */}
           <button

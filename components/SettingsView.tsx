@@ -225,22 +225,31 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
       const totalStepsCount = duration / interval;
       const increment = 100 / totalStepsCount;
 
+      let step0Done = false;
+      let step1Done = false;
+      let step2Done = false;
+
       const timer = setInterval(() => {
         setOverallProgress(prev => {
             const next = prev + increment;
-            if (next >= 33 && next < 66 && verificationSteps[0].status !== 'completed') {
+            if (next >= 33 && next < 66 && !step0Done) {
+                step0Done = true;
                 updateStep(0, "completed");
                 updateStep(1, "active");
                 setStatusText(isArabic ? "التحقق من الإيداع وتفعيل التذكرة..." : "VERIFYING ACCOUNT BALANCE AND VECTORS...");
             }
-            if (next >= 66 && next < 95 && verificationSteps[1].status !== 'completed') {
+            if (next >= 66 && next < 95 && !step1Done) {
+                step1Done = true;
                 updateStep(1, "completed");
                 updateStep(2, "active");
                 setStatusText(isArabic ? "إنشاء عقدة بروتوكول التشفير الفوري..." : "CREATING REALTIME UPLINK CLIENT NODE...");
             }
             if (next >= 100) {
-                updateStep(2, "completed");
-                setStatusText(isArabic ? "طلب تفعيل الاتصال مكتمل" : "UPLINK REQUEST COMMITTED");
+                if (!step2Done) {
+                    step2Done = true;
+                    updateStep(2, "completed");
+                    setStatusText(isArabic ? "طلب تفعيل الاتصال مكتمل" : "UPLINK REQUEST COMMITTED");
+                }
                 clearInterval(timer);
                 return 100;
             }
