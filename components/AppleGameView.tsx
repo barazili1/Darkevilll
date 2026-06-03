@@ -24,7 +24,7 @@ interface AppleGameProps {
 export const AppleGameView: React.FC<AppleGameProps> = ({ language, t, userId, platform }) => {
   const [gameState, setGameState] = useState<GameState>(GameState.IDLE);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [onlineUsersCount, setOnlineUsersCount] = useState(() => Math.floor(Math.random() * (1000 - 50 + 1)) + 50);
+  const [onlineUsersCount, setOnlineUsersCount] = useState(() => Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000);
   const [fluxValue, setFluxValue] = useState(98.2);
   const [rowCount, setRowCount] = useState(10);
   const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Hard');
@@ -76,17 +76,21 @@ export const AppleGameView: React.FC<AppleGameProps> = ({ language, t, userId, p
   const isAdmin = userId.startsWith("ADMIN_SESS_PROTOCOL_");
 
   useEffect(() => {
-    const interval = setInterval(() => {
-        setOnlineUsersCount(prev => {
-            const change = Math.floor(Math.random() * 7) - 3;
-            return Math.min(1000, Math.max(50, prev + change));
-        });
+    const userInterval = setInterval(() => {
+        setOnlineUsersCount(Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000);
+    }, 1500);
+
+    const fluxInterval = setInterval(() => {
         setFluxValue(prev => {
             const change = (Math.random() * 0.4 - 0.2);
             return parseFloat((prev + change).toFixed(1));
         });
     }, 3000);
-    return () => clearInterval(interval);
+
+    return () => {
+        clearInterval(userInterval);
+        clearInterval(fluxInterval);
+    };
   }, []);
 
   useEffect(() => {

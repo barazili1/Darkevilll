@@ -165,18 +165,17 @@ export const AppleGrid: React.FC<GridProps> = ({
                   return (
                     <MotionDiv
                       key={`cell-${rowIndex}-${colIndex}`}
-                      layout
                       whileHover={!isAnalyzing && (isVisible || !showResult) ? { scale: 1.05, zIndex: 20 } : {}}
                       onMouseEnter={() => !isAnalyzing && audioManager.playSoftClick()}
                       className={`
-                        aspect-square rounded-full flex items-center justify-center relative overflow-hidden border transition-all duration-500
+                        aspect-square rounded-full flex items-center justify-center relative overflow-hidden border transition-all duration-300
                         ${(isVisible && showResult)
                           ? (isPath
-                              ? 'bg-emerald-600/25 border-emerald-500 shadow-[inset_0_0_15px_rgba(16,185,129,0.2)]'
+                              ? 'bg-emerald-600/35 border-emerald-500 shadow-[inset_0_0_12px_rgba(16,185,129,0.3)]'
                               : isBad 
-                                ? 'bg-red-950/20 border-red-500/40 shadow-[inset_0_0_10px_rgba(239,68,68,0.1)]' 
-                                : 'bg-black/35 backdrop-blur-[1px] border-white/10')
-                          : 'bg-black/30 backdrop-blur-[1px] border-white/5'}
+                                ? 'bg-red-950/30 border-red-500/50 shadow-[inset_0_0_8px_rgba(239,68,68,0.2)]' 
+                                : 'bg-zinc-950/60 border-white/10')
+                          : 'bg-[#08080c]/50 border-white/5 hover:border-white/10'}
                       `}
                     >
                       <span className="absolute top-1 left-1 text-[5px] font-mono text-zinc-800 opacity-50 select-none">
@@ -185,13 +184,13 @@ export const AppleGrid: React.FC<GridProps> = ({
 
                       {(isVisible && showResult) ? (
                          <MotionDiv
-                          initial={isPath ? { scale: 0, opacity: 0 } : { opacity: 0 }}
+                          initial={{ scale: 0.8, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
-                          transition={{ duration: 0.4, delay: (rowCount - 1 - rowIndex) * 0.05 }}
+                          transition={{ duration: 0.35, ease: "easeOut", delay: rowIndex * 0.06 }}
                           className="w-full h-full flex items-center justify-center relative rounded-full overflow-hidden"
                          >
                            {isPath && (
-                               <div className="relative w-full h-full flex items-center justify-center">
+                               <div className="relative w-full h-full flex items-center justify-center animate-fade-in">
                                    <img 
                                         src="https://video11.rf.gd/apple.png" 
                                         alt="Healthy Apple" 
@@ -207,7 +206,7 @@ export const AppleGrid: React.FC<GridProps> = ({
                                    <img 
                                         src="https://video11.rf.gd/apple.png" 
                                         alt="Healthy Apple" 
-                                        className="w-full h-full object-cover rounded-full p-[1px] opacity-90"
+                                        className="w-full h-full object-cover rounded-full p-[1px] opacity-95"
                                         referrerPolicy="no-referrer"
                                    />
                                </div>
