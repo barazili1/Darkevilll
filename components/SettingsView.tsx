@@ -292,7 +292,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
   };
 
   return (
-    <div className="flex flex-col h-full px-4 pt-4 pb-20 overflow-y-auto custom-scrollbar relative bg-transparent select-none" dir={isArabic ? 'rtl' : 'ltr'}>
+    <div className="flex flex-col h-full px-4 pt-4 pb-20 overflow-y-auto custom-scrollbar relative bg-transparent select-none" dir="ltr">
       {/* Dynamic Background Grid Pattern */}
       <div className="absolute inset-0 bg-gradient-to-b from-red-950/20 to-transparent pointer-events-none h-48 z-0 opacity-50" />
       
@@ -339,7 +339,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
             </div>
           </div>
           <span className="text-[9px] font-mono font-black text-red-550 uppercase tracking-widest flex items-center gap-1 group-hover:text-red-400">
-            {isArabic ? "عرض المؤقت" : "VIEW TIMER"} <ArrowRight className={`w-3 h-3 ${isArabic ? 'rotate-180' : ''}`} />
+            {isArabic ? "عرض المؤقت" : "VIEW TIMER"} <ArrowRight className="w-3 h-3" />
           </span>
         </div>
       )}
@@ -355,7 +355,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
               </div>
               <div className="flex-1 min-w-0">
                  <span className="text-[7.5px] font-mono text-red-500 font-extrabold tracking-wider block uppercase mb-0.5">
-                   {stepTexts.step1_tag}
+                   <span className={isArabic ? 'text-[10px] font-sans font-black tracking-normal' : ''}>{stepTexts.step1_tag}</span>
                  </span>
                  <h3 className="text-sm font-black text-white uppercase tracking-tight leading-none mb-0.5">
                    {stepTexts.step1_title}
@@ -366,7 +366,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
             </div>
 
             <p className="text-[11px] text-zinc-400 leading-normal mb-3.5 font-bold font-mono">
-              {stepTexts.step1_desc}
+              <span className={isArabic ? 'text-[13px] font-sans leading-relaxed text-zinc-300 block mt-1' : ''}>{stepTexts.step1_desc}</span>
             </p>
 
             <a 
@@ -392,7 +392,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
               </div>
               <div className="flex-1 min-w-0">
                  <span className="text-[7.5px] font-mono text-red-500 font-extrabold tracking-wider block uppercase mb-0.5">
-                   {stepTexts.step2_tag}
+                   <span className={isArabic ? 'text-[10px] font-sans font-black tracking-normal' : ''}>{stepTexts.step2_tag}</span>
                  </span>
                  <h3 className="text-sm font-black text-white uppercase tracking-tight leading-none mb-0.5">
                    {stepTexts.step2_title}
@@ -402,18 +402,18 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
             </div>
 
             <p className="text-[11px] text-zinc-400 leading-normal mb-3.5 font-bold font-mono">
-              {stepTexts.step2_desc}
+              <span className={isArabic ? 'text-[13px] font-sans leading-relaxed text-zinc-300 block mt-1' : ''}>{stepTexts.step2_desc}</span>
             </p>
 
             <div 
               onClick={handleCopy}
-              className={`relative bg-black/60 rounded-xl border-2 border-dashed p-3.5 flex items-center justify-between cursor-pointer transition-all duration-300 ${isArabic ? 'text-right' : 'text-left'} ${
+              className={`relative bg-black/60 rounded-xl border-2 border-dashed p-3.5 flex items-center justify-between cursor-pointer transition-all duration-300 text-left ${
                 copied ? 'border-red-500 bg-red-500/[0.01] shadow-[0_0_15px_rgba(239,68,68,0.1)]' : 'border-white hover:border-white/80'
               }`}
             >
                <div className="z-10 flex flex-col justify-center">
                   <span className={`text-[7px] font-mono font-black tracking-wider uppercase mb-0.5 ${copied ? 'text-red-500 animate-pulse' : 'text-zinc-500'}`}>
-                    {copied ? stepTexts.step2_copied : stepTexts.step2_copy}
+                    <span className={isArabic ? 'text-[10px] font-sans font-medium' : ''}>{copied ? stepTexts.step2_copied : stepTexts.step2_copy}</span>
                   </span>
                   <span className="text-lg font-mono font-black tracking-[0.2em] text-white">
                     0000
@@ -439,7 +439,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
               </div>
               <div className="flex-1 min-w-0">
                  <span className="text-[7.5px] font-mono text-red-500 font-extrabold tracking-wider block uppercase mb-0.5">
-                   {stepTexts.step3_tag}
+                   <span className={isArabic ? 'text-[10px] font-sans font-black tracking-normal' : ''}>{stepTexts.step3_tag}</span>
                  </span>
                  <h3 className="text-sm font-black text-white uppercase tracking-tight leading-none mb-0.5">
                    {stepTexts.step3_title}
@@ -449,16 +449,16 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
             </div>
 
             <p className="text-[11px] text-zinc-400 leading-normal mb-3 font-bold font-mono">
-              {stepTexts.step3_desc}
+              <span className={isArabic ? 'text-[13px] font-sans leading-relaxed text-zinc-300 block mt-1' : ''}>{stepTexts.step3_desc}</span>
             </p>
 
             <div className="grid grid-cols-2 gap-3 mt-1.5" dir="ltr">
               <div className="bg-black/40 border border-white/60 p-3 rounded-xl flex flex-col items-center justify-center hover:border-white transition-colors">
-                  <span className="text-[6.5px] text-zinc-500 font-black uppercase tracking-wider mb-1 font-mono">{stepTexts.step3_global}</span>
+                  <span className="text-[6.5px] text-zinc-500 font-black uppercase tracking-wider mb-1 font-mono"><span className={isArabic ? 'text-[9.5px] font-sans tracking-normal' : ''}>{stepTexts.step3_global}</span></span>
                   <span className="text-lg font-black text-white font-display">$5.00</span>
               </div>
               <div className="bg-black/40 border border-white/60 p-3 rounded-xl flex flex-col items-center justify-center hover:border-white transition-colors">
-                  <span className="text-[6.5px] text-zinc-500 font-black uppercase tracking-wider mb-1 font-mono">{stepTexts.step3_local}</span>
+                  <span className="text-[6.5px] text-zinc-500 font-black uppercase tracking-wider mb-1 font-mono"><span className={isArabic ? 'text-[9.5px] font-sans tracking-normal' : ''}>{stepTexts.step3_local}</span></span>
                   <span className="text-lg font-black text-red-500 font-display">200 EGP</span>
               </div>
             </div>
@@ -476,7 +476,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
           <div className="flex justify-between items-start mb-4">
              <div>
                 <span className="text-[7.5px] font-mono text-red-500 font-extrabold tracking-wider block uppercase mb-0.5">
-                  {stepTexts.step4_tag}
+                  <span className={isArabic ? 'text-[10px] font-sans font-black tracking-normal' : ''}>{stepTexts.step4_tag}</span>
                 </span>
                 <h3 className="font-black font-display text-md text-white tracking-tight uppercase leading-none">
                   {stepTexts.step4_title}
@@ -486,17 +486,17 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
           </div>
 
           <p className="text-[11px] text-zinc-400 leading-normal mb-4 font-bold font-mono">
-            {stepTexts.step4_desc}
+            <span className={isArabic ? 'text-[13px] font-sans leading-relaxed text-zinc-300 block mt-1' : ''}>{stepTexts.step4_desc}</span>
           </p>
 
           <div className="space-y-4">
             {/* User ID Field with specialized layout */}
             <div>
               <label className="block text-[8px] text-zinc-400 mb-1.5 uppercase font-mono font-black tracking-widest font-bold">
-                {isArabic ? "معرف مستخدم" : "USER ID"} {platformName}
+                <span className={isArabic ? 'text-[11px] font-sans tracking-wide block mb-1.5' : ''}>{isArabic ? "معرف مستخدم" : "USER ID"} {platformName}</span>
               </label>
               <div className="relative">
-                  <div className={`absolute inset-y-0 ${isArabic ? 'right-0 border-l border-white/25 pl-3 pr-3.5' : 'left-0 border-r border-white/25 pr-3 pl-3.5'} flex items-center justify-center`}>
+                  <div className="absolute inset-y-0 left-0 border-r border-white/25 pr-3 pl-3.5 flex items-center justify-center">
                      <Fingerprint className={`w-4 h-4 ${userId ? 'text-red-550 animate-pulse' : 'text-zinc-400'}`} />
                   </div>
                   <input 
@@ -506,7 +506,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
                     placeholder={stepTexts.userid_placeholder}
                     disabled={isSubmitting}
                     maxLength={15}
-                    className={`w-full bg-[#040406]/75 border text-white font-mono text-sm py-3 rounded-xl focus:outline-none transition-all ${isArabic ? 'pr-12 pl-4 text-right' : 'pl-12 pr-4' } ${
+                    className={`w-full bg-[#040406]/75 border text-white font-mono text-sm py-3 rounded-xl focus:outline-none transition-all pl-12 pr-4 text-left ${
                       errors.userId || errors.userIdLength 
                         ? 'border-red-550 focus:border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.1)]' 
                         : 'border-white focus:border-white/80'
@@ -526,7 +526,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
                 <div className="grid grid-cols-2 gap-3.5">
                   <div>
                     <label className="block text-zinc-400 mb-1.5 uppercase font-mono font-black tracking-widest text-[7px] font-bold">
-                      {isArabic ? "إيصال الإيداع" : "RECEIPT PROOF"}
+                      <span className={isArabic ? 'text-[9.5px] font-sans block tracking-normal' : ''}>{isArabic ? "إيصال الإيداع" : "RECEIPT PROOF"}</span>
                     </label>
                     <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" id="screenshot-upload" disabled={isSubmitting} />
                     <label htmlFor="screenshot-upload" className={`flex flex-col items-center justify-center w-full h-24 border border-dashed rounded-xl cursor-pointer transition-all relative overflow-hidden bg-[#040406]/75 ${
@@ -538,7 +538,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
                         <div className="flex flex-col items-center gap-1 text-center p-2">
                            <Scan className="w-4 h-4 text-white/40 animate-pulse" />
                            <span className="text-[7px] text-zinc-400 font-extrabold uppercase tracking-wider font-mono">
-                             {isArabic ? "رفع الإيصال" : "UPLOAD RECEIPT"}
+                             <span className={isArabic ? 'text-[10.5px] font-sans font-black' : ''}>{isArabic ? "رفع الإيصال" : "UPLOAD RECEIPT"}</span>
                            </span>
                         </div>
                       )}
@@ -547,7 +547,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
 
                   <div>
                     <label className="block text-zinc-400 mb-1.5 uppercase font-mono font-black tracking-widest text-[7px] font-bold">
-                      {isArabic ? "لقطة الشاشة للملف" : "PROFILE SCREEN"}
+                      <span className={isArabic ? 'text-[9.5px] font-sans block tracking-normal' : ''}>{isArabic ? "لقطة الشاشة للملف" : "PROFILE SCREEN"}</span>
                     </label>
                     <input type="file" accept="image/*" onChange={handleProfileFileChange} className="hidden" id="profile-upload" disabled={isSubmitting} />
                     <label htmlFor="profile-upload" className={`flex flex-col items-center justify-center w-full h-24 border border-dashed rounded-xl cursor-pointer transition-all relative overflow-hidden bg-[#040406]/75 ${
@@ -559,7 +559,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
                         <div className="flex flex-col items-center gap-1 text-center p-2">
                            <Image className="w-4 h-4 text-white/40 animate-pulse" />
                            <span className="text-[7px] text-zinc-400 font-extrabold uppercase tracking-wider font-mono">
-                             {isArabic ? "رفع لقطة الحساب" : "UPLOAD PROFILE"}
+                             <span className={isArabic ? 'text-[10.5px] font-sans font-black' : ''}>{isArabic ? "رفع لقطة الحساب" : "UPLOAD PROFILE"}</span>
                            </span>
                         </div>
                       )}
@@ -597,8 +597,8 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
                 : 'bg-red-650 hover:bg-red-600 border-red-500/20 shadow-[0_4px_16px_rgba(220,38,38,0.2)]'
             }`}
           >
-              <span>{isApprovedOnServer ? (isArabic ? "الدخول المباشر والتفعيل الفوري" : "ENTER SECURE LIVE TERMINAL") : (isArabic ? "تقديم طلب التحقق والتفعيل" : "AUTHORIZE CONNECTION PROFILE")}</span>
-              <ArrowRight className={`w-3.5 h-3.5 text-white ${isArabic ? 'rotate-180' : ''}`} />
+              <span><span className={isArabic ? 'text-[12.5px] font-sans font-black' : ''}>{isApprovedOnServer ? (isArabic ? "الدخول المباشر والتفعيل الفوري" : "ENTER SECURE LIVE TERMINAL") : (isArabic ? "تقديم طلب التحقق والتفعيل" : "AUTHORIZE CONNECTION PROFILE")}</span></span>
+              <ArrowRight className="w-3.5 h-3.5 text-white" />
           </button>
           </div>
         </div>
@@ -631,7 +631,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onComplete, lang, t, platfo
                     </div>
                  </div>
 
-                 <div className="space-y-3.5 w-full text-left" dir={isArabic ? 'rtl' : 'ltr'}>
+                 <div className="space-y-3.5 w-full text-left" dir="ltr">
                     {verificationSteps.map((step, idx) => (
                         <div 
                           key={idx} 

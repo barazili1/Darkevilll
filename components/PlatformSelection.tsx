@@ -146,15 +146,15 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
       <div className="text-center mb-8 relative z-10 animate-in fade-in slide-in-from-top-4 duration-500">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/30 border border-red-500/20 mb-3">
            <Binary className="w-3 h-3 text-red-500 animate-pulse" />
-           <span className="text-[8px] font-mono font-black text-red-500 tracking-[0.3em] uppercase">
+           <span className={`font-black uppercase ${isArabic ? 'text-[10px] font-sans tracking-[0.1em]' : 'text-[8px] font-mono tracking-[0.3em]'}`}>
              {isArabic ? "مسار آمن ومعزول" : "TUNNEL: SHIELDED BYPASS"}
            </span>
          </div>
         
         <h2 className="text-3xl font-display font-black text-white tracking-tight mb-1.5 uppercase">
-          {isArabic ? "اختر " : "CHOOSE "}<span className="text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.5)]">{isArabic ? "البوابة" : "GATEWAY"}</span>
+          {isArabic ? "اختر " : "CHOOSE "}<span className="text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.5)]">{isArabic ? "المنصة" : "GATEWAY"}</span>
         </h2>
-        <p className="text-[8px] font-mono text-zinc-500 uppercase tracking-[0.3em] font-black">
+        <p className={`font-black uppercase ${isArabic ? 'text-[11px] font-sans tracking-[0.1em]' : 'text-[8px] font-mono tracking-[0.3em]'}`}>
           {isArabic ? "حدد العقدة النشطة للحقن" : "Select active node for injection"}
         </p>
       </div>
@@ -195,19 +195,19 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
                 {/* Tech stats metrics to make it look incredibly cool */}
                 <div className="grid grid-cols-3 gap-1.5 p-3 bg-black/50 rounded-xl border border-white/5 font-mono text-[8px]">
                    <div className="flex flex-col items-center border-r border-white/5">
-                      <span className="text-zinc-600 uppercase tracking-wider text-[6px] font-black mb-0.5">
+                      <span className={`text-zinc-650 uppercase tracking-wider font-black mb-0.5 ${isArabic ? 'text-[9.5px]' : 'text-[6px]'}`}>
                         {isArabic ? "الاستجابة" : "LATENCY"}
                       </span>
                       <span className="text-red-500 font-black">{p.latency}</span>
                    </div>
                    <div className="flex flex-col items-center border-r border-white/5">
-                      <span className="text-zinc-600 uppercase tracking-wider text-[6px] font-black mb-0.5">
+                      <span className={`text-zinc-650 uppercase tracking-wider font-black mb-0.5 ${isArabic ? 'text-[9.5px]' : 'text-[6px]'}`}>
                         {isArabic ? "السلامة" : "INTEGRITY"}
                       </span>
                       <span className="text-white font-black">{p.integrity}</span>
                    </div>
                    <div className="flex flex-col items-center">
-                      <span className="text-zinc-600 uppercase tracking-wider text-[6px] font-black mb-0.5">
+                      <span className={`text-zinc-650 uppercase tracking-wider font-black mb-0.5 ${isArabic ? 'text-[9.5px]' : 'text-[6px]'}`}>
                         {isArabic ? "النطاق" : "PACKETS"}
                       </span>
                       <span className="text-white font-black">{p.packets}</span>
@@ -226,10 +226,10 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
            </div>
            <div className="flex-1 min-w-0">
               <div className="flex justify-between items-center mb-0.5">
-                 <span className="text-[7px] font-mono text-zinc-500 uppercase tracking-widest font-black block truncate">
+                 <span className={`block truncate text-zinc-500 uppercase font-black ${isArabic ? 'text-[10px] font-sans' : 'text-[7px] font-mono tracking-widest'}`}>
                    {isArabic ? "قنوات الاتصال المفرزة" : "UPLINK CHANNELS ACTIVE"}
                  </span>
-                 <span className="text-[7px] font-mono text-red-500 uppercase font-black shrink-0">
+                 <span className={`shrink-0 text-red-500 uppercase font-black ${isArabic ? 'text-[10px] font-sans' : 'text-[7px] font-mono'}`}>
                    {isArabic ? "مشفر" : "LINEBET SECURE"}
                  </span>
               </div>
@@ -249,8 +249,8 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
           <div className="absolute top-0 bottom-0 left-0 w-[2px] bg-gradient-to-b from-red-550 to-transparent" />
           <div className="absolute top-0 bottom-0 right-0 w-[2px] bg-gradient-to-t from-red-550 to-transparent" />
 
-          <span className="drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">
-            {isArabic ? "دخول آمن للشبكة" : "LOGIN SECURELY"}
+          <span className={`drop-shadow-[0_0_8px_rgba(239,68,68,0.5)] ${isArabic ? 'text-[14px] font-sans' : 'text-xs'}`}>
+            {isArabic ? "اختيار المنصة" : "LOGIN SECURELY"}
           </span>
           <ChevronRight className="w-4 h-4 text-red-550 animate-pulse" />
         </button>
@@ -258,7 +258,7 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
 
       {/* PREMIUM CYBER CONNECTION LOADER */}
       {isConnecting && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/98 backdrop-blur-3xl animate-in fade-in duration-500 p-6" dir={isArabic ? "rtl" : "ltr"}>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/98 backdrop-blur-3xl animate-in fade-in duration-500 p-6" dir="ltr">
            <div className="relative w-full max-w-sm flex flex-col items-center">
               
               <div className="w-full bg-[#07070a] border border-red-500/30 rounded-[2.5rem] p-8 shadow-[0_0_80px_rgba(239,68,68,0.2)] relative overflow-hidden flex flex-col">
@@ -269,7 +269,7 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
                    <div className="w-10 h-10 rounded-xl bg-[#09090d] border border-red-550/20 flex items-center justify-center shadow-[0_0_15px_rgba(239,68,68,0.1)] shrink-0">
                       <Terminal className="w-5 h-5 text-red-500" />
                    </div>
-                   <div className={isArabic ? "text-right" : "text-left"}>
+                   <div className="text-left">
                      <h3 className="text-base font-display font-black text-white uppercase tracking-tight">
                        {isArabic ? "خطوات التنشيط والتفعيل" : "ACTIVATION STEPS"}
                      </h3>
@@ -286,7 +286,7 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-950/40 border border-red-500/30 text-red-500 text-xs font-bold font-mono">
                       1
                     </span>
-                    <p className={`text-zinc-200 text-xs leading-relaxed font-semibold self-center ${isArabic ? 'text-right' : 'text-left'}`}>
+                    <p className={`text-zinc-200 leading-relaxed font-semibold self-center text-left ${isArabic ? 'text-sm font-sans' : 'text-xs'}`}>
                       {isArabic ? "إنشاء حساب جديد تماماً" : "Create a completely new account"}
                     </p>
                   </div>
@@ -296,7 +296,7 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-950/40 border border-red-500/30 text-red-500 text-xs font-bold font-mono">
                       2
                     </span>
-                    <p className={`text-zinc-200 text-xs leading-relaxed font-semibold self-center ${isArabic ? 'text-right' : 'text-left'}`}>
+                    <p className={`text-zinc-200 leading-relaxed font-semibold self-center text-left ${isArabic ? 'text-sm font-sans' : 'text-xs'}`}>
                       {isArabic ? "الحد الأدنى للإيداع 200 جنيه أو 5 دولار" : "Minimum required deposit is 200 EGP or 5 USD"}
                     </p>
                   </div>
@@ -306,7 +306,7 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-950/40 border border-red-500/30 text-red-500 text-xs font-bold font-mono">
                       3
                     </span>
-                    <p className={`text-zinc-200 text-xs leading-relaxed font-semibold self-center ${isArabic ? 'text-right' : 'text-left'}`}>
+                    <p className={`text-zinc-200 leading-relaxed font-semibold self-center text-left ${isArabic ? 'text-sm font-sans' : 'text-xs'}`}>
                       {isArabic ? "استخدم البروموكود أدناه للتسجيل" : "Use registration promo code below"}
                     </p>
                   </div>
@@ -314,8 +314,8 @@ const PlatformSelection: React.FC<PlatformSelectionProps> = ({ onSelect, t }) =>
 
                 {/* Promo Code Copy block */}
                 <div className="mb-8 p-4 bg-zinc-950/80 rounded-2xl border border-white/5 flex items-center justify-between gap-4">
-                  <div className={isArabic ? "text-right flex flex-col" : "text-left flex flex-col"}>
-                    <span className="text-[7.5px] font-mono text-zinc-500 uppercase tracking-widest font-black">
+                  <div className="text-left flex flex-col">
+                    <span className={`text-zinc-500 uppercase tracking-widest font-black ${isArabic ? 'text-[11px] font-sans' : 'text-[7.5px] font-mono'}`}>
                       {isArabic ? "كود التفعيل والبروموكود" : "PROMOCODE"}
                     </span>
                     <span className="text-xl font-display font-black text-white tracking-widest mt-0.5">

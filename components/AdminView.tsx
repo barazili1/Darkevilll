@@ -92,7 +92,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ onLogout, lang }) => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#030304] text-white p-6 overflow-y-auto" dir={isArabic ? 'rtl' : 'ltr'}>
+    <div className="flex flex-col h-full bg-[#030304] text-white p-6 overflow-y-auto" dir="ltr">
       {/* Header Panel */}
       <div className="flex items-center justify-between border-b border-red-500/10 pb-4 mb-6">
         <div className="flex items-center gap-3">

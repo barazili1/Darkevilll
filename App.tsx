@@ -16,7 +16,7 @@ import { audioManager } from './utils/audioManager';
 const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('splash');
   const [activeTab, setActiveTab] = useState<'info' | 'conditions' | 'platform'>('platform');
-  const [lang, setLang] = useState<Language>('en');
+  const [lang, setLang] = useState<Language>('ar');
   const [userId, setUserId] = useState<string>('');
   const [selectedPlatform, setSelectedPlatform] = useState<Platform>('linebet');
   const [selectedGame, setSelectedGame] = useState<GameType>('apple');

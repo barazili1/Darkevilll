@@ -114,7 +114,7 @@ export const AdminApprovalModal: React.FC<AdminApprovalModalProps> = ({
   const progressPercent = Math.min(100, Math.max(0, (timeLeft / 1800) * 100));
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md" dir={isArabic ? 'rtl' : 'ltr'}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md" dir="ltr">
       <MotionDiv
         initial={{ opacity: 0, scale: 0.95, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
