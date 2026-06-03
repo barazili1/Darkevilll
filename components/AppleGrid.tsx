@@ -120,7 +120,7 @@ const RootAppleGrid: React.FC<GridProps> = ({
 
   return (
     <div className="relative w-full mx-auto">
-      <div className={`flex flex-col gap-1.5 p-4 relative z-10 transition-all duration-700 ${showSuccessFlash ? 'scale-[1.01]' : ''}`}>
+      <div className="flex flex-col gap-1.5 p-4 relative z-10">
         
         <div className="flex items-center gap-3 mb-2 pb-2 border-b border-white/5 opacity-40">
             <div className="w-14 shrink-0" />
@@ -149,9 +149,9 @@ const RootAppleGrid: React.FC<GridProps> = ({
           return (
             <div key={`row-${rowIndex}`} className="flex items-center gap-3 group/row">
                <div className="w-14 select-none shrink-0 text-center flex items-center justify-center">
-                  <div className={`w-full py-1 rounded-[25px] border transition-all duration-500 flex items-center justify-center ${
+                  <div className={`w-full py-1 rounded-[25px] border transition-colors duration-150 flex items-center justify-center ${
                     showResult 
-                      ? 'border-red-500 bg-red-950/40 text-red-400 font-bold shadow-[0_0_10px_rgba(239,68,68,0.25)]' 
+                      ? 'border-red-500 bg-red-950/40 text-red-400 font-bold' 
                       : 'border-red-500/25 bg-black/45 text-zinc-400'
                   }`}>
                     <span className="font-mono text-[9px] font-black tracking-normal leading-none">
@@ -172,70 +172,74 @@ const RootAppleGrid: React.FC<GridProps> = ({
                   let isVisible = !!showResult;
 
                   return (
-                    <MotionDiv
+                    <div
                       key={`cell-${rowIndex}-${colIndex}`}
-                      whileHover={!isAnalyzing && (isVisible || !showResult) ? { scale: 1.05, zIndex: 20 } : {}}
                       onMouseEnter={() => !isAnalyzing && audioManager.playSoftClick()}
                       className={`
-                        aspect-square rounded-full flex items-center justify-center relative overflow-hidden border transition-all duration-300
+                        aspect-square rounded-full flex items-center justify-center relative overflow-hidden border transition-colors duration-150
+                        ${!isAnalyzing && (isVisible || !showResult) ? 'cursor-pointer hover:border-white/20' : ''}
                         ${(isVisible && showResult)
                           ? (isPath
                               ? 'bg-emerald-600/35 border-emerald-500 shadow-[inset_0_0_12px_rgba(16,185,129,0.3)]'
                               : isBad 
                                 ? 'bg-red-950/30 border-red-500/50 shadow-[inset_0_0_8px_rgba(239,68,68,0.2)]' 
                                 : 'bg-zinc-950/60 border-white/10')
-                          : 'bg-[#08080c]/50 border-white/5 hover:border-white/10'}
+                          : 'bg-[#08080c]/50 border-white/5'}
                       `}
                     >
                       <span className="absolute top-1 left-1 text-[5px] font-mono text-zinc-800 opacity-50 select-none">
                         [{String(rowIndex + 1).padStart(2, '0')}-{COL_LETTERS[colIndex]}]
                       </span>
 
-                      {(isVisible && showResult) ? (
-                         <MotionDiv
-                          initial={{ scale: 0.75, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          transition={{ duration: 0.35, ease: "easeOut", delay: (rowCount - 1 - rowIndex) * 0.08 }}
-                          className="w-full h-full flex items-center justify-center relative rounded-full overflow-hidden"
+                      {/* Dot overlay when result is hidden */}
+                      <div className={`absolute w-1 h-1 rounded-full transition-opacity duration-150 ${
+                        showResult 
+                          ? 'opacity-0 pointer-events-none' 
+                          : isAnalyzing 
+                            ? 'bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.8)] animate-pulse' 
+                            : 'bg-zinc-900 opacity-20'
+                      }`} />
+
+                      {(isVisible && showResult) && (
+                         <div
+                          style={{ animationDelay: `${rowIndex * 70}ms` }}
+                          className="w-full h-full flex items-center justify-center relative rounded-full overflow-hidden animate-smooth-fade"
                          >
                            {isPath && (
-                               <div className="relative w-full h-full flex items-center justify-center animate-fade-in">
-                                   <img 
-                                        src="https://video11.rf.gd/apple.png" 
-                                        alt="Healthy Apple" 
-                                        className="w-full h-full object-cover rounded-full p-[1px]"
-                                        referrerPolicy="no-referrer"
-                                   />
-                                   <div className="absolute inset-0 border-2 border-emerald-500 rounded-full pointer-events-none animate-none" />
-                               </div>
+                             <>
+                               <img 
+                                    src="https://video11.rf.gd/apple.png" 
+                                    alt="Healthy Apple" 
+                                    className="w-full h-full object-cover rounded-full p-[1px] absolute"
+                                    referrerPolicy="no-referrer"
+                                    decoding="async"
+                               />
+                               <div className="absolute inset-0 border-2 border-emerald-500 rounded-full pointer-events-none" />
+                             </>
                            )}
                            
                            {isGood && (
-                               <div className="w-full h-full flex items-center justify-center">
-                                   <img 
-                                        src="https://video11.rf.gd/apple.png" 
-                                        alt="Healthy Apple" 
-                                        className="w-full h-full object-cover rounded-full p-[1px] opacity-95"
-                                        referrerPolicy="no-referrer"
-                                   />
-                               </div>
+                               <img 
+                                    src="https://video11.rf.gd/apple.png" 
+                                    alt="Healthy Apple" 
+                                    className="w-full h-full object-cover rounded-full p-[1px] opacity-95 absolute"
+                                    referrerPolicy="no-referrer"
+                                    decoding="async"
+                               />
                            )}
 
                            {isBad && (
-                               <div className="w-full h-full flex items-center justify-center">
-                                   <img 
-                                        src="https://video11.rf.gd/poi.png" 
-                                        alt="Rotten Apple" 
-                                        className="w-full h-full object-cover rounded-full p-[1px]"
-                                        referrerPolicy="no-referrer"
-                                   />
-                               </div>
+                               <img 
+                                    src="https://video11.rf.gd/poi.png" 
+                                    alt="Rotten Apple" 
+                                    className="w-full h-full object-cover rounded-full p-[1px] absolute"
+                                    referrerPolicy="no-referrer"
+                                    decoding="async"
+                               />
                            )}
-                         </MotionDiv>
-                      ) : (
-                        <div className={`w-0.5 h-0.5 rounded-full transition-all duration-1000 ${isAnalyzing ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,1)] animate-pulse' : 'bg-zinc-900 opacity-30'}`} />
+                         </div>
                       )}
-                    </MotionDiv>
+                    </div>
                   );
                 })}
               </div>
@@ -266,4 +270,15 @@ const RootAppleGrid: React.FC<GridProps> = ({
   );
 };
 
-export const AppleGrid = React.memo(RootAppleGrid);
+export const AppleGrid = React.memo(RootAppleGrid, (prevProps, nextProps) => {
+  return (
+    prevProps.isAnalyzing === nextProps.isAnalyzing &&
+    prevProps.predictionId === nextProps.predictionId &&
+    prevProps.rowCount === nextProps.rowCount &&
+    prevProps.difficulty === nextProps.difficulty &&
+    prevProps.revealRotten === nextProps.revealRotten &&
+    prevProps.language === nextProps.language &&
+    prevProps.path.length === nextProps.path.length &&
+    prevProps.path.every((val, idx) => val === nextProps.path[idx])
+  );
+});
