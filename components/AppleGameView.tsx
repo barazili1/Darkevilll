@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { AppleGrid } from './AppleGrid';
 
 const MotionDiv = motion.div as any;
+const EMPTY_PATH: number[] = [];
 import { audioManager } from '../utils/audioManager';
 import { GameState, PredictionResult, Language, Platform } from '../types';
 import { 
@@ -342,7 +343,7 @@ export const AppleGameView: React.FC<AppleGameProps> = ({ language, t, userId, p
 
             <div className="relative rounded-[25px] border-2 border-red-500/50 bg-black/45 backdrop-blur-md shadow-[0_0_35px_rgba(239,68,68,0.3)] p-2.5">
                 <AppleGrid 
-                    path={currentResult?.path || []} 
+                    path={currentResult?.path || EMPTY_PATH} 
                     isAnalyzing={gameState === GameState.ANALYZING}
                     predictionId={currentResult?.id}
                     rowCount={rowCount}

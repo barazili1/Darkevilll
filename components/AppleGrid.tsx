@@ -30,7 +30,7 @@ const ODDS_MAP = [
 
 const COL_LETTERS = ['A', 'B', 'C', 'D', 'E'];
 
-export const AppleGrid: React.FC<GridProps> = ({ 
+const RootAppleGrid: React.FC<GridProps> = ({ 
   path, 
   isAnalyzing, 
   predictionId, 
@@ -57,6 +57,15 @@ export const AppleGrid: React.FC<GridProps> = ({
           return () => clearTimeout(timer);
       }
   }, [predictionId, isSuccess]);
+
+  useEffect(() => {
+      // Preload critical assets to make transition instant and eliminate browser decoding lags
+      const urls = ["https://video11.rf.gd/apple.png", "https://video11.rf.gd/poi.png"];
+      urls.forEach(url => {
+          const img = new Image();
+          img.src = url;
+      });
+  }, []);
 
   const boardLayout = useMemo(() => {
     if (!predictionId) return null;
@@ -184,9 +193,9 @@ export const AppleGrid: React.FC<GridProps> = ({
 
                       {(isVisible && showResult) ? (
                          <MotionDiv
-                          initial={{ scale: 0.8, opacity: 0 }}
+                          initial={{ scale: 0.75, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
-                          transition={{ duration: 0.35, ease: "easeOut", delay: rowIndex * 0.06 }}
+                          transition={{ duration: 0.35, ease: "easeOut", delay: (rowCount - 1 - rowIndex) * 0.08 }}
                           className="w-full h-full flex items-center justify-center relative rounded-full overflow-hidden"
                          >
                            {isPath && (
@@ -256,3 +265,5 @@ export const AppleGrid: React.FC<GridProps> = ({
     </div>
   );
 };
+
+export const AppleGrid = React.memo(RootAppleGrid);
